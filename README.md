@@ -23,3 +23,19 @@ Things you may want to cover:
 
 * ...
 # rails-watch-list
+
+
+class Movie < ApplicationRecord
+    has_many :bookmarks, dependent: :destroy
+    validates :title, presence: true, uniqueness: true
+    validates :overview, presence: true
+  end
+
+
+class Bookmark < ApplicationRecord
+  belongs_to :movie
+  belongs_to :list
+
+  validates :list, uniqueness: { scope: :movie }
+  validates :comment, length: { minimum: 6 }
+end
